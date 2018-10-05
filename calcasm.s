@@ -54,18 +54,14 @@ _start:
 
 get_first_number:
         movq ST_ARGV_1(%rbp), %rdi
-        call str_len
-        movq %rax, %rsi
-        call get_int
+        call get_number
         cmpq $NOT_ALL_DIGITS, %rax
         je exit_num_error
         movq %rax, %r11
 
 get_second_number:
         movq ST_ARGV_3(%rbp), %rdi
-        call str_len
-        movq %rax, %rsi
-        call get_int
+        call get_number
         cmpq $NOT_ALL_DIGITS, %rax
         je exit_num_error
         movq %rax, %r12
@@ -129,6 +125,25 @@ error_exit:
         movq $SYS_EXIT, %rax
         movq $EXIT_FAILURE, %rdx
         syscall
+
+
+# Process a sting into its corresponding digit
+#
+# Function checks string length, and returns -1 if
+# the string is not a number, otherwise it returns
+# the number represented by the string as an integer.
+#
+# %rdi - input string
+#
+.globl get_number
+.type get_number, @function
+get_number:
+        call str_len
+        movq %rax, %rsi
+        call get_int
+
+exit_get_number:
+        ret
 
 
 # Turn string of digits into corresponding int
