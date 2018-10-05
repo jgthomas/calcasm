@@ -2,6 +2,7 @@
 
 .include "linux.s"
 .include "ascii.s"
+.include "numbers.s"
 
 NewLine:
         .long 0x0a
@@ -63,6 +64,22 @@ write_int:
         movq %rsp, %rbp          # set this function's base pointer
         xorq %r10, %r10          # set chararcter count to zero
         movq %rdi, %rax          # place number to divide in return register
+
+check_if_negation_sign_needed:
+        cmpq $0, %rdi            # check if integer is negative
+        jl print_negation        # if so, print a negative sign...
+        jmp div_loop             # ...otherwise proceed
+
+print_negation:
+        pushq %rdi               # save values on stack
+        pushq %rax
+        movq $SYS_WRITE, %rax    # print negative sign
+        movq $STDOUT, %rdi
+        movq $NEGATIVE_SIGN, %rsi
+        movq $1, %rdx
+        syscall
+        popq %rax                # restore saved values
+        popq %rdi
 
 div_loop:
         movq $0, %rdx            # set remainder to zero
