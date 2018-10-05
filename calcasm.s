@@ -133,14 +133,38 @@ error_exit:
 # the string is not a number, otherwise it returns
 # the number represented by the string as an integer.
 #
+# Passed in
 # %rdi - input string
+#
+# Local parameters
+# %rsi - length of string
+# %r12 - save whether string starts with negative sign
 #
 .globl get_number
 .type get_number, @function
 get_number:
+        call is_negative
+        movq %rax, %r12
+
         call str_len
         movq %rax, %rsi
+
+        cmpq $TRUE, %r12
+        je handle_negative
+
+go_get_number:
         call get_int
+        jmp exit_get_number
+
+handle_negative:
+        cmpq $1, %rsi
+        jle not_number
+        inc %rdi
+        dec %rsi
+        jmp go_get_number
+
+not_number:
+        movq $NOT_ALL_DIGITS, %rax
 
 exit_get_number:
         ret
