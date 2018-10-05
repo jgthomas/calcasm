@@ -138,22 +138,30 @@ error_exit:
 #
 # Local parameters
 # %rsi - length of string
-# %r12 - save whether string starts with negative sign
+# %r15 - save whether string starts with negative sign
 #
 .globl get_number
 .type get_number, @function
 get_number:
         call is_negative
-        movq %rax, %r12
+        movq %rax, %r15
 
         call str_len
         movq %rax, %rsi
 
-        cmpq $TRUE, %r12
+        cmpq $TRUE, %r15
         je handle_negative
 
 go_get_number:
+        pushq %r15
         call get_int
+        popq %r15
+        cmpq $TRUE, %r15
+        je make_int_negative
+        jmp exit_get_number
+
+make_int_negative:
+        neg %rax
         jmp exit_get_number
 
 handle_negative:
