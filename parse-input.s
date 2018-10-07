@@ -20,9 +20,9 @@
 #
 # Passed in
 # %rdi - input string
+# %rsi - length of string
 #
 # Local parameters
-# %rsi - length of string
 # %r15 - save whether string starts with negative sign
 #
 .globl get_number
@@ -31,8 +31,8 @@ get_number:
         call is_negative
         movq %rax, %r15
 
-        call str_len
-        movq %rax, %rsi
+        #call str_len
+        #movq %rax, %rsi
 
         cmpq $TRUE, %r15
         je handle_negative
@@ -48,14 +48,14 @@ make_int_negative:
         jmp exit_get_number
 
 handle_negative:
-        cmpq $1, %rsi                   # if str len is only 1 then its just a minus sign
-        jle not_a_number
+        #cmpq $1, %rsi                   # if str len is only 1 then its just a minus sign
+        #jle not_a_number
         inc %rdi                        # move the start of the string along by one byte
         dec %rsi                        # decrement the length of the string
         jmp go_get_number
 
-not_a_number:
-        movq $NOT_ALL_DIGITS, %rax
+#not_a_number:
+#        movq $NOT_ALL_DIGITS, %rax
 
 exit_get_number:
         ret
@@ -73,15 +73,15 @@ exit_get_number:
 .type get_int, @function
 get_int:
         pushq %r15                      # save whether negative or not on stack
-        call is_number
-        cmpq $FALSE, %rax
-        je not_all_digits
+        #call is_number
+        #cmpq $FALSE, %rax
+        #je not_all_digits
 
         call digits_to_int
-        jmp exit_get_int
+        #jmp exit_get_int
 
-not_all_digits:
-        movq $NOT_ALL_DIGITS, %rax
+#not_all_digits:
+#        movq $NOT_ALL_DIGITS, %rax
 
 exit_get_int:
         popq %r15                       # restore result of negative test
@@ -134,6 +134,17 @@ end:
 is_number:
         movq $TRUE, %rax                    # assume it is a number
         xor %rdx, %rdx                      # set offset to zero
+
+check_if_negative:
+        movb (%rdi,%rdx,1), %cl             # get first byte
+        cmpb $NEGATIVE_SIGN, %cl            # check if negation sign
+        je check_length
+        jmp loop_is_number
+
+check_length:
+        cmpq $1, %rsi                       # if negative but only one char long
+        je not_number                       # then string is just a minus sign
+        incq %rdx                           # ...else move to second char
 
 loop_is_number:
         cmpq %rdx, %rsi
