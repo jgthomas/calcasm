@@ -52,26 +52,6 @@ exit_get_number:
         ret
 
 
-# Turn string of digits into corresponding int
-#
-# %rdi - input string
-# %rsi - length of string
-#
-# returns -1 if string is not all digits
-# otherwise returns the integer
-#
-#.globl get_int
-#.type get_int, @function
-#get_int:
-#        pushq %r15                      # save whether negative or not on stack
-#
-#        call digits_to_int
-#
-#exit_get_int:
-#        popq %r15                       # restore result of negative test
-#        ret
-
-
 # Count the number of characters in a
 # null-terminated string
 #
