@@ -2,10 +2,10 @@
 # as = assembler
 # ld = linker
 if [[ "$1" == "clean" ]]; then
-        rm calcasm.o write-functions.o utilities.o calcasm
+        rm calcasm.o write-output.o parse-input.o calcasm
 else
         as calcasm.s -o calcasm.o &&
-        as write-functions.s -o write-functions.o &&
-        as utilities.s -o utilities.o &&
-        ld calcasm.o write-functions.o utilities.o -o calcasm
+        as write-output.s -o write-output.o &&
+        as parse-input.s -o parse-input.o &&
+        ld calcasm.o write-output.o parse-input.o -o calcasm
 fi
