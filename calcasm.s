@@ -12,8 +12,6 @@
 
 .equ ARG_NUM, 4
 
-.equ NOT_ALL_DIGITS, -1
-
 .equ ST_SIZE_RESERVE, 8
 
 .equ MUL_OPERATOR, 120
