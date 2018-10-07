@@ -163,10 +163,10 @@ make_int_negative:
         jmp exit_get_number
 
 handle_negative:
-        cmpq $1, %rsi
+        cmpq $1, %rsi                   # if str len is only 1 then its just a minus sign
         jle not_number
-        inc %rdi
-        dec %rsi
+        inc %rdi                        # move the start of the string along by one byte
+        dec %rsi                        # decrement the length of the string
         jmp go_get_number
 
 not_number:
@@ -187,7 +187,7 @@ exit_get_number:
 .globl get_int
 .type get_int, @function
 get_int:
-        pushq %r15
+        pushq %r15                      # save whether negative or not on stack
         call is_number
         cmpq $FALSE, %rax
         je not_all_digits
@@ -199,5 +199,5 @@ not_all_digits:
         movq $NOT_ALL_DIGITS, %rax
 
 exit_get_int:
-        popq %r15
+        popq %r15                       # restore result of negative test
         ret
