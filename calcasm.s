@@ -153,9 +153,7 @@ get_number:
         je handle_negative
 
 go_get_number:
-        pushq %r15
         call get_int
-        popq %r15
         cmpq $TRUE, %r15
         je make_int_negative
         jmp exit_get_number
@@ -189,6 +187,7 @@ exit_get_number:
 .globl get_int
 .type get_int, @function
 get_int:
+        pushq %r15
         call is_number
         cmpq $FALSE, %rax
         je not_all_digits
@@ -200,4 +199,5 @@ not_all_digits:
         movq $NOT_ALL_DIGITS, %rax
 
 exit_get_int:
+        popq %r15
         ret
