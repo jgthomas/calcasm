@@ -25,30 +25,30 @@
 # Local parameters
 # %r15 - save whether string starts with negative sign
 #
-.globl get_number
-.type get_number, @function
-get_number:
+.globl convert_to_int
+.type convert_to_int, @function
+convert_to_int:
         call is_negative
         movq %rax, %r15
         cmpq $TRUE, %r15
         je handle_negative
 
-go_get_number:
+go_convert_to_int:
         call digits_to_int
         cmpq $TRUE, %r15
         je make_int_negative
-        jmp exit_get_number
+        jmp exit_convert_to_int
 
 make_int_negative:
         neg %rax
-        jmp exit_get_number
+        jmp exit_convert_to_int
 
 handle_negative:
         inc %rdi                        # move the start of the string along by one byte
         dec %rsi                        # decrement the length of the string
-        jmp go_get_number
+        jmp go_convert_to_int
 
-exit_get_number:
+exit_convert_to_int:
         ret
 
 

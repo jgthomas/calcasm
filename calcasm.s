@@ -57,7 +57,7 @@ get_first_number:
         call is_number               # check if string is a number
         cmpq $FALSE, %rax
         je exit_num_error            # exit with error if not number
-        call get_number              # convert string to integer
+        call convert_to_int          # convert string to integer
         movq %rax, %r11              # store integer for operation
 
 get_second_number:
@@ -67,7 +67,7 @@ get_second_number:
         call is_number               # check if string is a number
         cmpq $FALSE, %rax
         je exit_num_error            # exit with error if not number
-        call get_number              # convert string to integer
+        call convert_to_int          # convert string to integer
         movq %rax, %r12              # store integer for operation
 
 get_operator:
