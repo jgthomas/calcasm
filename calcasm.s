@@ -53,18 +53,33 @@ _start:
         jne exit_arg_error
 
 get_first_number:
-        movq ST_ARGV_1(%rbp), %rdi
-        call get_number
-        cmpq $NOT_ALL_DIGITS, %rax
-        je exit_num_error
-        movq %rax, %r11
+        movq ST_ARGV_1(%rbp), %rdi   # load string address into register
+        call str_len                 # get length of string
+        movq %rax, %rsi              # load length into register
+        call is_number               # check if string is a number
+        cmpq $FALSE, %rax
+        je exit_num_error            # exit with error if not number
+        call get_number              # convert string to integer
+        movq %rax, %r11              # store integer for operation
+        #call get_number
+        #cmpq $NOT_ALL_DIGITS, %rax
+        #je exit_num_error
+        #movq %rax, %r11
 
 get_second_number:
-        movq ST_ARGV_3(%rbp), %rdi
-        call get_number
-        cmpq $NOT_ALL_DIGITS, %rax
-        je exit_num_error
-        movq %rax, %r12
+        movq ST_ARGV_3(%rbp), %rdi   # load string address into register
+        call str_len                 # get length of string
+        movq %rax, %rsi              # load length into register
+        call is_number               # check if string is a number
+        cmpq $FALSE, %rax
+        je exit_num_error            # exit with error if not number
+        call get_number              # convert string to integer
+        movq %rax, %r12              # store integer for operation
+        #movq ST_ARGV_3(%rbp), %rdi
+        #call get_number
+        #cmpq $NOT_ALL_DIGITS, %rax
+        #je exit_num_error
+        #movq %rax, %r12
 
 get_operator:
         movq ST_ARGV_2(%rbp), %rax
