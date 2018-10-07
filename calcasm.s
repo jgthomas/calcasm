@@ -12,9 +12,9 @@
 
 .equ ARG_NUM, 4
 
-.equ ST_SIZE_RESERVE, 8
-
 .equ NOT_ALL_DIGITS, -1
+
+.equ ST_SIZE_RESERVE, 8
 
 .equ MUL_OPERATOR, 120
 .equ ADD_OPERATOR, 43
@@ -125,79 +125,3 @@ error_exit:
         movq $SYS_EXIT, %rax
         movq $EXIT_FAILURE, %rdx
         syscall
-
-
-# Process a sting into its corresponding digit
-#
-# Function checks string length, and returns -1 if
-# the string is not a number, otherwise it returns
-# the number represented by the string as an integer.
-#
-# Passed in
-# %rdi - input string
-#
-# Local parameters
-# %rsi - length of string
-# %r15 - save whether string starts with negative sign
-#
-.globl get_number
-.type get_number, @function
-get_number:
-        call is_negative
-        movq %rax, %r15
-
-        call str_len
-        movq %rax, %rsi
-
-        cmpq $TRUE, %r15
-        je handle_negative
-
-go_get_number:
-        call get_int
-        cmpq $TRUE, %r15
-        je make_int_negative
-        jmp exit_get_number
-
-make_int_negative:
-        neg %rax
-        jmp exit_get_number
-
-handle_negative:
-        cmpq $1, %rsi                   # if str len is only 1 then its just a minus sign
-        jle not_number
-        inc %rdi                        # move the start of the string along by one byte
-        dec %rsi                        # decrement the length of the string
-        jmp go_get_number
-
-not_number:
-        movq $NOT_ALL_DIGITS, %rax
-
-exit_get_number:
-        ret
-
-
-# Turn string of digits into corresponding int
-#
-# %rdi - input string
-# %rsi - length of string
-#
-# returns -1 if string is not all digits
-# otherwise returns the integer
-#
-.globl get_int
-.type get_int, @function
-get_int:
-        pushq %r15                      # save whether negative or not on stack
-        call is_number
-        cmpq $FALSE, %rax
-        je not_all_digits
-
-        call digits_to_int
-        jmp exit_get_int
-
-not_all_digits:
-        movq $NOT_ALL_DIGITS, %rax
-
-exit_get_int:
-        popq %r15                       # restore result of negative test
-        ret
