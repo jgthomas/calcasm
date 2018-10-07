@@ -34,7 +34,7 @@ get_number:
         je handle_negative
 
 go_get_number:
-        call get_int
+        call digits_to_int
         cmpq $TRUE, %r15
         je make_int_negative
         jmp exit_get_number
@@ -60,16 +60,16 @@ exit_get_number:
 # returns -1 if string is not all digits
 # otherwise returns the integer
 #
-.globl get_int
-.type get_int, @function
-get_int:
-        pushq %r15                      # save whether negative or not on stack
-
-        call digits_to_int
-
-exit_get_int:
-        popq %r15                       # restore result of negative test
-        ret
+#.globl get_int
+#.type get_int, @function
+#get_int:
+#        pushq %r15                      # save whether negative or not on stack
+#
+#        call digits_to_int
+#
+#exit_get_int:
+#        popq %r15                       # restore result of negative test
+#        ret
 
 
 # Count the number of characters in a
@@ -174,6 +174,7 @@ exit_is_number:
 #
 .globl digits_to_int
 digits_to_int:
+        pushq %r15             # save whether negative
         movq %rdi, %r12        # save string address
         xor %r13, %r13         # set offset to zero
         xor %r14, %r14         # set total to zero
@@ -201,6 +202,7 @@ back_to_top:
 
 exit_loop_digits_to_int:
         movq %r14, %rax
+        popq %r15                    # restore record of whether negative
         ret
 
 
