@@ -80,8 +80,8 @@ print_negation:
         call write_char
         popq %rax                # restore saved values
         popq %rdi
-        neg %rax
-
+        neg %rax                 # with negative sign printed, make number
+                                 # positive and print digits as normal
 div_loop:
         movq $0, %rdx            # set remainder to zero
         movq $10, %rbx           # number to divide by
