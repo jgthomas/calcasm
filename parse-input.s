@@ -46,7 +46,8 @@ end:
 
 # FUNCTION: is_number
 #
-#    Check if a string is made entirely of the characters 0-9
+#    Check if a string is made entirely of the characters 0-9.
+#    Allows for negative numbers starting with '-'.
 #
 # PARAMETERS
 #
