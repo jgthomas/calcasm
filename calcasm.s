@@ -14,9 +14,6 @@
 
 .equ ST_SIZE_RESERVE, 8
 
-.equ MUL_OPERATOR, 120
-.equ ADD_OPERATOR, 43
-
 ArgNumError:
         .string "usage ./calc [number] [operator] [number]"
 
