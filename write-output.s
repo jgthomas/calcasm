@@ -129,14 +129,13 @@ div_loop:
         jmp div_loop             # otherwise continue here
 
 next:
-        cmpq $0, %r12            # if counter reaches zero
-        jz exit                  # exit function
+        cmpq $0, %r12            # if counter reaches zero...
+        jz exit                  # ...exit function
         decq %r12                # decrement char counter
 
-        movq %rsp, %rdi
-        call write_char
-
-        addq $8, %rsp            # move stack pointer back to next char
+        movq %rsp, %rdi          # get character
+        call write_char          # print character
+        addq $8, %rsp            # move stack pointer to next character
         jmp next                 # back to start of loop
 
 exit:
