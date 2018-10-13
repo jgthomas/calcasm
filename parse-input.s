@@ -21,6 +21,10 @@
 #    %rdi - address of a string
 #    %rax - count of chars
 #
+# RETURN
+#
+#    Number of chars in the string
+#
 .globl str_len
 .type str_len, @function
 str_len:
