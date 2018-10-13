@@ -47,6 +47,26 @@ write_char:
         ret
 
 
+# FUNCTION: write_error_msg
+#
+#    Write an error message to stderr.
+#
+# PARAMETERS
+#
+#    %rdi - the error message
+#    %rsi - the message length
+#
+.globl write_error_msg
+.type write_error_msg, @function
+write_error_msg:
+        movq %rsi, %rdx
+        movq %rdi, %rsi
+        movq $STDERR, %rdi
+        movq $SYS_WRITE, %rax
+        syscall
+        ret
+
+
 # FUNCTION: write_int
 #
 #    Convert an integer to a string and wrtie to stdout.
