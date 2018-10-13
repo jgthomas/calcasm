@@ -10,3 +10,4 @@
 # operators
 .equ MUL_OPERATOR, 120
 .equ ADD_OPERATOR, 43
+.equ SUB_OPERATOR, 45
