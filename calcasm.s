@@ -25,7 +25,7 @@ OperatorError:
 
 
 .section .text
-#
+
 # Command line arguments
 #
 # (%rsp)   = argc
