@@ -239,6 +239,10 @@ exit_loop_digits_to_int:
 #    %rdi - BASE
 #    %rsi - POWER
 #
+# LOCAL VARIABLES
+#
+#    %rax - ongoing calculation of result
+#
 # RETURN
 #
 #    Integr result of BASE**POWER
