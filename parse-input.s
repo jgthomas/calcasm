@@ -95,6 +95,7 @@ end:
 # TRUE (1) if all numerals, else FALSE (0)
 #
 .globl is_number
+.type is_number, @function
 is_number:
         movq $TRUE, %rax                    # assume it is a number
         xor %rdx, %rdx                      # set offset to zero
@@ -153,6 +154,7 @@ exit_is_number:
 # integer equivalent of the string of digits
 #
 .globl digits_to_int
+.type digits_to_int, @function
 digits_to_int:
         pushq %r15             # save whether negative
         movq %rdi, %r12        # save string address
@@ -211,6 +213,7 @@ exit_is_negative:
 # returns BASE**POWER
 #
 .globl base_to_power
+.type base_to_power, @function
 base_to_power:
         cmpq $0, %rsi
         je to_power_zero
