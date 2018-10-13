@@ -187,7 +187,7 @@ exit_is_negative:
 #    -> Calculate greatest power of 10 from length of string
 #    -> Get each byte (char) in turn, using an offset of string start
 #    -> Convert that char to an int
-#    -> Multiply that int by the current power of 10
+#    -> Multiply that int by 10 to the current power
 #    -> Decrement power
 #    -> Increment offset
 #    -> Return once final_int * 10**0 has been added to total
