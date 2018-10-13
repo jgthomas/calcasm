@@ -172,25 +172,26 @@ exit_is_negative:
         ret
 
 
-# Turn a string of digits into an integer
+# FUNCTION: digits_to_int
 #
+#    Turn a string of digits into an integer.
 #
-# Parameters
+# PARAMETERS
 #
-# %rdi - address of string
-# %rsi - length of string
+#    %rdi - address of string
+#    %rsi - length of string
 #
-# Variables
+# LOCAL VARIABLES
 #
-# %r12 - store address of string
-# %r13 - current offset of string
-# %r14 - total
-# %r15 - current power
-# %bl - current byte being examined (first part of %rbx)
+#    %r12 - store address of string
+#    %r13 - current offset of string
+#    %r14 - total
+#    %r15 - current power
+#    %bl - current byte being examined (first part of %rbx)
 #
-# Return
+# RETURN
 #
-# integer equivalent of the string of digits
+#    Integer equivalent of the string of digits
 #
 .globl digits_to_int
 .type digits_to_int, @function
