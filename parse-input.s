@@ -12,46 +12,6 @@
 
 .section .text
 
-# Process a sting into its corresponding digit
-#
-# Function checks string length, and returns -1 if
-# the string is not a number, otherwise it returns
-# the number represented by the string as an integer.
-#
-# Passed in
-# %rdi - input string
-# %rsi - length of string
-#
-# Local parameters
-# %r15 - save whether string starts with negative sign
-#
-.globl convert_to_int
-.type convert_to_int, @function
-convert_to_int:
-        call is_negative
-        movq %rax, %r15
-        cmpq $TRUE, %r15
-        je handle_negative
-
-go_convert_to_int:
-        call digits_to_int
-        cmpq $TRUE, %r15
-        je make_int_negative
-        jmp exit_convert_to_int
-
-make_int_negative:
-        neg %rax
-        jmp exit_convert_to_int
-
-handle_negative:
-        inc %rdi                        # move the start of the string along by one byte
-        dec %rsi                        # decrement the length of the string
-        jmp go_convert_to_int
-
-exit_convert_to_int:
-        ret
-
-
 # Count the number of characters in a
 # null-terminated string
 #
@@ -132,6 +92,61 @@ exit_is_number:
         ret
 
 
+# Process a sting into its corresponding digit
+#
+# Function checks string length, and returns -1 if
+# the string is not a number, otherwise it returns
+# the number represented by the string as an integer.
+#
+# Passed in
+# %rdi - input string
+# %rsi - length of string
+#
+# Local parameters
+# %r15 - save whether string starts with negative sign
+#
+.globl convert_to_int
+.type convert_to_int, @function
+convert_to_int:
+        call is_negative
+        movq %rax, %r15
+        cmpq $TRUE, %r15
+        je handle_negative
+
+go_convert_to_int:
+        call digits_to_int
+        cmpq $TRUE, %r15
+        je make_int_negative
+        jmp exit_convert_to_int
+
+make_int_negative:
+        neg %rax
+        jmp exit_convert_to_int
+
+handle_negative:
+        inc %rdi                        # move the start of the string along by one byte
+        dec %rsi                        # decrement the length of the string
+        jmp go_convert_to_int
+
+exit_convert_to_int:
+        ret
+
+
+# Return true if string starts with negation symbol
+#
+# %rdi - string
+#
+.globl is_negative
+.type is_negative, @function
+is_negative:
+        movq $TRUE, %rax
+        cmpb $NEGATIVE_SIGN, (%rdi)
+        je exit_is_negative
+        movq $FALSE, %rax
+
+exit_is_negative:
+        ret
+
 
 # Turn a string of digits into an integer
 #
@@ -185,22 +200,6 @@ back_to_top:
 exit_loop_digits_to_int:
         movq %r14, %rax
         popq %r15                    # restore record of whether negative
-        ret
-
-
-# Return true if string starts with negation symbol
-#
-# %rdi - string
-#
-.globl is_negative
-.type is_negative, @function
-is_negative:
-        movq $TRUE, %rax
-        cmpb $NEGATIVE_SIGN, (%rdi)
-        je exit_is_negative
-        movq $FALSE, %rax
-
-exit_is_negative:
         ret
 
 
