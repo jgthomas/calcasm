@@ -47,30 +47,31 @@ write_char:
         ret
 
 
-.globl write_int
-.type write_int, @function
+# FUNCTION: write_int
+#
+#    Convert an integer to a string and wrtie to stdout.
 #
 # PROCEDURE
 #
-# -> Take in integer
-# -> Perfom modulo division to get last digit
-# -> Convert digit to ascii character code
-# -> Store on stack
-# -> Once number reaches zero...
-# -> ...Walk back through the stack printing the characters
-#
+#    -> Take in integer
+#    -> Perfom modulo division to get last digit
+#    -> Convert digit to ascii character code
+#    -> Store on stack
+#    -> Once number reaches zero...
+#    -> ...Walk back through the stack printing the characters
 #
 # PARAMATERS
 #
-# %rdi - integer passed in to print
+#    %rdi - integer passed in to print
 #
+# LOCAL VARIABLES
 #
-# VARIABLES
+#    %rax - result of division
+#    %rdx - remainder of division
+#    %r10 - count of characters in resulting string
 #
-# %rax - result of division
-# %rdx - remainder of division
-# %r10 - count of characters in resulting string
-#
+.globl write_int
+.type write_int, @function
 write_int:
         pushq %rbp               # store base pointer of calling function
         movq %rsp, %rbp          # set this function's base pointer
