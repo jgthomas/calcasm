@@ -69,9 +69,6 @@ end:
 .globl is_number
 .type is_number, @function
 is_number:
-        pushq %rdx                    # save registers used for local variables
-        pushq %rcx
-
         movq $TRUE, %rax              # assume it is a number
         xor %rdx, %rdx                # set offset to zero
 
@@ -104,8 +101,6 @@ not_number:
         movq $FALSE, %rax
 
 exit_is_number:
-        popq %rcx                     # restore registers
-        popq %rdx
         ret
 
 
