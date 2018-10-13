@@ -28,7 +28,7 @@
 #
 # RETURN
 #
-#    Integr result of BASE**POWER
+#    Integer result of BASE**POWER
 #
 .globl base_to_power
 .type base_to_power, @function
