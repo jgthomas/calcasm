@@ -61,7 +61,7 @@ end:
 #
 # RETURN
 #
-#     TRUE (1) if all numerals, else FALSE (0)
+#    TRUE (1) if all numerals, else FALSE (0)
 #
 .globl is_number
 .type is_number, @function
