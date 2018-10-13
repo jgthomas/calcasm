@@ -131,6 +131,8 @@ exit_is_number:
 .globl convert_to_int
 .type convert_to_int, @function
 convert_to_int:
+        pushq %r15             # save register used locally
+
         call is_negative
         movq %rax, %r15
         cmpq $TRUE, %r15
@@ -152,6 +154,7 @@ handle_negative:
         jmp go_convert_to_int
 
 exit_convert_to_int:
+        popq %r15              # restore register
         ret
 
 
