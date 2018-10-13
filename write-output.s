@@ -13,6 +13,10 @@ NegativeSign:
 
 .section .text
 
+# FUNCTION: write_newline
+#
+#    Write a newline to stdout.
+#
 .globl write_newline
 .type write_newline, @function
 write_newline:
@@ -24,8 +28,13 @@ write_newline:
         ret
 
 
+# FUNCTION: write_char
 #
-# %rdi - the character to write
+#    Write a single character to stdout.
+#
+# PARAMETERS
+#
+#    %rdi - the character to write
 #
 .globl write_char
 .type write_char, @function
