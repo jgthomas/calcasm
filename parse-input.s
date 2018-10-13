@@ -148,9 +148,17 @@ exit_convert_to_int:
         ret
 
 
-# Return true if string starts with negation symbol
+# FUNCTION: is_negative
 #
-# %rdi - string
+#    Check if string starts with negation symbol.
+#
+# PARAMETERS
+#
+#    %rdi - string
+#
+# RETURN
+#
+#    TRUE (1) if starts with negation, else FALSE (0)
 #
 .globl is_negative
 .type is_negative, @function
