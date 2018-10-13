@@ -140,8 +140,8 @@ make_int_negative:
         jmp exit_convert_to_int
 
 handle_negative:
-        inc %rdi                        # move the start of the string along by one byte
-        dec %rsi                        # decrement the length of the string
+        inc %rdi               # move the start of the string along by one byte
+        dec %rsi               # decrement the length of the string
         jmp go_convert_to_int
 
 exit_convert_to_int:
