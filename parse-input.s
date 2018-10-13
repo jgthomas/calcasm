@@ -40,22 +40,23 @@ end:
         ret
 
 
-# Check if a string is made entirely of the characters 0-9
+# FUNCTION: is_number
 #
+#    Check if a string is made entirely of the characters 0-9
 #
-# Parameters
+# PARAMETERS
 #
-# %rdi - address of string
-# %rsi - length of string
+#    %rdi - address of string
+#    %rsi - length of string
 #
-# Variables
+# LOCAL VARIABLES
 #
-# %rdx - current offset
-# %cl - current byte being examined (first part of %rcx)
+#    %rdx - current offset
+#    %cl - current byte being examined (first part of %rcx)
 #
-# Return
+# RETURN
 #
-# TRUE (1) if all numerals, else FALSE (0)
+#     TRUE (1) if all numerals, else FALSE (0)
 #
 .globl is_number
 .type is_number, @function
