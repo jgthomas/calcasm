@@ -181,6 +181,17 @@ exit_is_negative:
 #
 #    Turn a string of digits into an integer.
 #
+# PROCEDURE
+#
+#    -> Take in string
+#    -> Calculate greatest power of 10 from length of string
+#    -> Get each byte (char) in turn, using an offset of string start
+#    -> Convert that char to an int
+#    -> Multiply that int by the current power of 10
+#    -> Decrement power
+#    -> Increment offset
+#    -> Return once final_int * 10**0 has been added to total
+#
 # PARAMETERS
 #
 #    %rdi - address of string
@@ -192,7 +203,8 @@ exit_is_negative:
 #    %r13 - current offset of string
 #    %r14 - total
 #    %r15 - current power
-#    %bl - current byte being examined (first part of %rbx)
+#    %bl  - current byte being examined (first part of %rbx)
+#    %rcx - quadword representation of current byte, after conversion to int
 #
 # RETURN
 #
@@ -202,11 +214,13 @@ exit_is_negative:
 .type digits_to_int, @function
 digits_to_int:
         pushq %r15             # save from calling function
+
         movq %rdi, %r12        # save string address
         xor %r13, %r13         # set offset to zero
         xor %r14, %r14         # set total to zero
-        movq %rsi, %r15        # set first power
-        subq $1, %r15
+
+        movq %rsi, %r15        # set first power from length of string
+        subq $1, %r15          # minus 1
 
 loop_digits_to_int:
         movb (%r12,%r13,1), %bl      # get current byte
