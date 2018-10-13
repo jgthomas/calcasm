@@ -69,27 +69,30 @@ end:
 .globl is_number
 .type is_number, @function
 is_number:
-        movq $TRUE, %rax                    # assume it is a number
-        xor %rdx, %rdx                      # set offset to zero
+        pushq %rdx                    # save registers used for local variables
+        pushq %rcx
+
+        movq $TRUE, %rax              # assume it is a number
+        xor %rdx, %rdx                # set offset to zero
 
 check_if_negative:
-        movb (%rdi,%rdx,1), %cl             # get first byte
-        cmpb $NEGATIVE_SIGN, %cl            # check if negation sign
+        movb (%rdi,%rdx,1), %cl       # get first byte
+        cmpb $NEGATIVE_SIGN, %cl      # check if negation sign
         je check_length
         jmp loop_is_number
 
 check_length:
-        cmpq $1, %rsi                       # if negative but only one char long
-        je not_number                       # then string is just a minus sign
-        incq %rdx                           # ...else move to second char
+        cmpq $1, %rsi                 # if negative but only one char long
+        je not_number                 # then string is just a minus sign
+        incq %rdx                     # ...else move to second char
 
 loop_is_number:
         cmpq %rdx, %rsi
         je exit_is_number
 
-        movb (%rdi,%rdx,1), %cl             # get current byte
+        movb (%rdi,%rdx,1), %cl       # get current byte
 
-        cmpb $ZERO_CHAR, %cl                # check it is a numeral
+        cmpb $ZERO_CHAR, %cl          # check it is a numeral
         jl not_number
         cmpb $NINE_CHAR, %cl
         jg not_number
@@ -101,6 +104,8 @@ not_number:
         movq $FALSE, %rax
 
 exit_is_number:
+        popq %rcx                     # restore registers
+        popq %rdx
         ret
 
 
