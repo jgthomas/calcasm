@@ -12,11 +12,14 @@
 
 .section .text
 
-# Count the number of characters in a
-# null-terminated string
+# FUNCTION: str_len
 #
-# %rdi - address of a string
-# %rax - count of chars
+#    Count the number of characters in a null-terminated string.
+#
+# PARAMETERS
+#
+#    %rdi - address of a string
+#    %rax - count of chars
 #
 .globl str_len
 .type str_len, @function
