@@ -12,8 +12,6 @@
 
 .equ ARG_NUM, 4
 
-.equ ST_SIZE_RESERVE, 8
-
 ArgNumError:
         .string "usage ./calc [number] [operator] [number]"
 
