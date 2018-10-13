@@ -107,6 +107,8 @@ exit_is_number:
 # FUNCTION: convert_to_int
 #
 #    Convert a string into the integer represented by its digits.
+#    Checks for and provides appropriate negation if the string
+#    represents a negative number.
 #
 # PARAMETERS
 #
