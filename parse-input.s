@@ -201,7 +201,7 @@ exit_is_negative:
 .globl digits_to_int
 .type digits_to_int, @function
 digits_to_int:
-        pushq %r15             # save whether negative
+        pushq %r15             # save from calling function
         movq %rdi, %r12        # save string address
         xor %r13, %r13         # set offset to zero
         xor %r14, %r14         # set total to zero
@@ -229,5 +229,5 @@ back_to_top:
 
 exit_loop_digits_to_int:
         movq %r14, %rax
-        popq %r15                    # restore record of whether negative
+        popq %r15                    # restore register
         ret
