@@ -230,13 +230,18 @@ exit_loop_digits_to_int:
         ret
 
 
-# Calculate BASE to a POWER
+# FUNCTION: base_to_power
 #
-# %rdi - BASE
+#    Calculate BASE**POWER.
 #
-# %rsi - POWER
+# PARAMETERS
 #
-# returns BASE**POWER
+#    %rdi - BASE
+#    %rsi - POWER
+#
+# RETURN
+#
+#    Integr result of BASE**POWER
 #
 .globl base_to_power
 .type base_to_power, @function
