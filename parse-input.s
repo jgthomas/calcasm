@@ -19,6 +19,9 @@
 # PARAMETERS
 #
 #    %rdi - address of a string
+#
+# LOCAL VARIABLES
+#
 #    %rax - count of chars
 #
 # RETURN
