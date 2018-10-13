@@ -70,14 +70,14 @@ write_char:
 #    %rbx - divisor, 10, to get each digit
 #    %rdx - remainder of division
 #
-#    %r10 - count of characters in resulting string
+#    %r12 - count of characters in resulting string
 #
 .globl write_int
 .type write_int, @function
 write_int:
         pushq %rbp               # store base pointer of calling function
         movq %rsp, %rbp          # set this function's base pointer
-        xorq %r10, %r10          # set chararcter count to zero
+        xorq %r12, %r12          # set chararcter count to zero
         movq %rdi, %rax          # place number to divide in return register
 
 check_if_negation_sign_needed:
@@ -102,16 +102,16 @@ div_loop:
 
         addq $INT_CONVERT, %rdx  # convert to ascii digit
         pushq %rdx               # store digit on stack
-        incq %r10                # increment digit counter
+        incq %r12                # increment digit counter
 
         cmpq $0, %rax            # check if division has reached zero
         jz next                  # if so, jump to printing loop
         jmp div_loop             # otherwise continue here
 
 next:
-        cmpq $0, %r10            # if counter reaches zero
+        cmpq $0, %r12            # if counter reaches zero
         jz exit                  # exit function
-        decq %r10                # decrement char counter
+        decq %r12                # decrement char counter
 
         movq %rsp, %rdi
         call write_char
