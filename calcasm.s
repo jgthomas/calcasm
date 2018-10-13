@@ -94,29 +94,23 @@ exit:
         syscall
 
 exit_arg_error:
-        movq $SYS_WRITE, %rax
-        movq $STDERR, %rdi
-        movq $ArgNumError, %rsi
-        movq $38, %rdx
-        syscall
+        movq $ArgNumError, %rdi
+        movq $38, %rsi
+        call write_error_msg
         call write_newline
         jmp error_exit
 
 exit_num_error:
-        movq $SYS_WRITE, %rax
-        movq $STDERR, %rdi
-        movq $NotNumError, %rsi
-        movq $29, %rdx
-        syscall
+        movq $NotNumError, %rdi
+        movq $29, %rsi
+        call write_error_msg
         call write_newline
         jmp error_exit
 
 exit_operator_error:
-        movq $SYS_WRITE, %rax
-        movq $STDERR, %rdi
-        movq $OperatorError, %rsi
-        movq $25, %rdx
-        syscall
+        movq $OperatorError, %rdi
+        movq $25, %rsi
+        call write_error_msg
         call write_newline
         jmp error_exit
 
