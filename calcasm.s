@@ -71,10 +71,17 @@ get_operator:
         je add_operation
         cmpb $MUL_OPERATOR, (%rax)
         je mul_operation
+        cmpb $SUB_OPERATOR, (%rax)
+        je sub_operation
         jmp exit_operator_error
 
 add_operation:
         addq %r12, %r11
+        movq %r11, %rdi
+        jmp print_result
+
+sub_operation:
+        subq %r12, %r11
         movq %r11, %rdi
         jmp print_result
 
