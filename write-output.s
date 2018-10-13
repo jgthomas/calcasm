@@ -66,8 +66,10 @@ write_char:
 #
 # LOCAL VARIABLES
 #
-#    %rax - result of division
+#    %rax - the integer to be divided
+#    %rbx - divisor, 10, to get each digit
 #    %rdx - remainder of division
+#
 #    %r10 - count of characters in resulting string
 #
 .globl write_int
