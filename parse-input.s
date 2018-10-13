@@ -104,18 +104,22 @@ exit_is_number:
         ret
 
 
-# Process a sting into its corresponding digit
+# FUNCTION: convert_to_int
 #
-# Function checks string length, and returns -1 if
-# the string is not a number, otherwise it returns
-# the number represented by the string as an integer.
+#    Convert a string into the integer represented by its digits.
 #
-# Passed in
-# %rdi - input string
-# %rsi - length of string
+# PARAMETERS
 #
-# Local parameters
-# %r15 - save whether string starts with negative sign
+#    %rdi - input string
+#    %rsi - length of string
+#
+# LOCAL VARIABLES
+#
+#    %r15 - save whether string starts with negative sign
+#
+# RETURN
+#
+#    The integer represented by the string
 #
 .globl convert_to_int
 .type convert_to_int, @function
