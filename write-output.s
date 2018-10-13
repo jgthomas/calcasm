@@ -86,12 +86,11 @@ check_if_negation_sign_needed:
         jmp div_loop             # ...otherwise proceed
 
 print_negation:
-        #pushq %rdi               # save values on stack
-        pushq %rax
+        pushq %rax               # save integer to print
         movq $NegativeSign, %rdi
         call write_char
-        popq %rax                # restore saved values
-        #popq %rdi
+        popq %rax                # restore integer
+
         neg %rax                 # with negative sign printed, make number
                                  # positive and print digits as normal
 div_loop:
