@@ -114,11 +114,13 @@ next:
         jz exit                  # exit function
         decq %r10                # decrement char counter
 
-        movq $SYS_WRITE, %rax    # set write syscall
-        movq $STDOUT, %rdi       # set where to write (1)
-        movq %rsp, %rsi          # point to character at top of stack (2)
-        movq $1, %rdx            # set size, single character (3)
-        syscall
+        movq %rsp, %rdi
+        call write_char
+        #movq $SYS_WRITE, %rax    # set write syscall
+        #movq $STDOUT, %rdi       # set where to write (1)
+        #movq %rsp, %rsi          # point to character at top of stack (2)
+        #movq $1, %rdx            # set size, single character (3)
+        #syscall
 
         addq $8, %rsp            # move stack pointer back to next char
         jmp next                 # back to start of loop
