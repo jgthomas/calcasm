@@ -16,7 +16,7 @@ ArgNumError:
         .string "usage ./calcasm <number> <operator> <number>"
 
 NotNumError:
-        .string "you have not entered a number"
+        .string "One or more inputs is not a number"
 
 OperatorError:
         .string "Invalid operator supplied"
@@ -202,7 +202,7 @@ exit_arg_error:
 
 exit_num_error:
         movq $NotNumError, %rdi
-        movq $29, %rsi
+        movq $34, %rsi
         call write_error_msg
         call write_newline
         jmp error_exit
