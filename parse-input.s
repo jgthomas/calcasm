@@ -265,44 +265,88 @@ exit_loop_digits_to_int:
 #
 #    TRUE (1) if strings are the same, else FALSE (0)
 #
-.globl string_match
-.type string_match, @function
-string_match:
-        pushq %rbx                # save registers
-        pushq %r12
-        pushq %r13
+#.globl string_match
+#.type string_match, @function
+#string_match:
+#        pushq %rbx                # save registers
+#        pushq %r12
+#        pushq %r13
+#
+#        movq %rdi, %r12           # save addresses of strings
+#        movq %rsi, %r13
+#
+#        call str_len              # get length of first string
+#        movq %rax, %r14
+#
+#        movq %rsi, %rdi           # get length of second string
+#        call str_len
+#        movq %rax, %r15
+#
+#        cmpq %r14, %r15           # check strings are same length
+#        jne not_same
+#
+#check_chars:
+#        cmpq $0, %r14             # compare each byte of the two strings
+#        je same
+#        dec %r14
+#        movb (%r12,%r14), %bl
+#        cmpb %bl, (%r13,%r14)
+#        jne not_same
+#        jmp check_chars
+#
+#not_same:
+#        movq $FALSE, %rax
+#        jmp exit_string_match
+#
+#same:
+#        movq $TRUE, %rax
+#
+#exit_string_match:
+#        popq %r13                 # restore registers
+#        popq %r12
+#        popq %rbx
+#        ret
 
-        movq %rdi, %r12           # save addresses of strings
-        movq %rsi, %r13
 
-        call str_len              # get length of first string
-        movq %rax, %r14
-
-        movq %rsi, %rdi           # get length of second string
-        call str_len
-        movq %rax, %r15
-
-        cmpq %r14, %r15           # check strings are same length
-        jne not_same
-
-check_chars:
-        cmpq $0, %r14             # compare each byte of the two strings
+# FUNCTION: string_elements_match
+#
+#    Test that two strings are made of same sequence of characters.
+#    Assumes strings are known to be of same length.
+#
+# PARAMETERS
+#
+#    %rdi - first string
+#    %rsi - second string
+#    %rdx - length of strings
+#
+# LOCAL VARIABLES
+#
+#    %r14 - current offset
+#    %cl  - the current char to check - lower byte of %rcx
+#
+# RETURN
+#
+#    TRUE (1) if strings are the same, else FALSE (0)
+#
+.globl string_elements_match
+.type string_elements_match, @function
+string_elements_match:
+        movq %rdx, %r14
+match_loop:
+        cmpq $0, %r14
         je same
         dec %r14
-        movb (%r12,%r14), %bl
-        cmpb %bl, (%r13,%r14)
+        movb (%rdi,%r14), %cl
+        cmpb %cl, (%rsi,%r14)
         jne not_same
-        jmp check_chars
+        jmp match_loop
 
 not_same:
         movq $FALSE, %rax
-        jmp exit_string_match
+        jmp exit_string_elements_match
 
 same:
         movq $TRUE, %rax
 
-exit_string_match:
-        popq %r13                 # restore registers
-        popq %r12
-        popq %rbx
+exit_string_elements_match:
         ret
