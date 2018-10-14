@@ -286,7 +286,7 @@ string_match:
         jne not_same
 
 check_chars:
-        cmpq $0, %r14             # compare each byte of the string
+        cmpq $0, %r14             # compare each byte of the two strings
         je same
         dec %r14
         movb (%r12,%r14), %bl
