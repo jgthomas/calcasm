@@ -268,21 +268,25 @@ exit_loop_digits_to_int:
 .globl string_match
 .type string_match, @function
 string_match:
-        pushq %rbx
+        pushq %rbx                # save registers
         pushq %r12
         pushq %r13
-        movq %rdi, %r12
+
+        movq %rdi, %r12           # save addresses of strings
         movq %rsi, %r13
-        call str_len
+
+        call str_len              # get length of first string
         movq %rax, %r14
-        movq %rsi, %rdi
+
+        movq %rsi, %rdi           # get length of second string
         call str_len
         movq %rax, %r15
-        cmpq %r14, %r15
+
+        cmpq %r14, %r15           # check strings are same length
         jne not_same
 
 check_chars:
-        cmpq $0, %r14
+        cmpq $0, %r14             # compare each byte of the string
         je same
         dec %r14
         movb (%r12,%r14), %bl
@@ -298,7 +302,7 @@ same:
         movq $TRUE, %rax
 
 exit_string_match:
-        popq %r13
+        popq %r13                 # restore registers
         popq %r12
         popq %rbx
         ret
