@@ -24,6 +24,9 @@ OperatorError:
 ZeroDivError:
         .string "Zero division error"
 
+AddOp:
+        .string "add"
+
 .section .bss
 
 
@@ -69,22 +72,27 @@ get_second_number:
         movq %rax, %r12              # store integer for operation
 
 get_operator:
-        movq ST_ARGV_2(%rbp), %rax
+        movq ST_ARGV_2(%rbp), %rbx
 
-        cmpb $ADD_OPERATOR, (%rax)
+        cmpb $ADD_OPERATOR, (%rbx)
+        je add_operation
+        movq $AddOp, %rdi
+        movq %rbx, %rsi
+        call string_match
+        cmpq $TRUE, %rax
         je add_operation
 
-        cmpb $SUB_OPERATOR, (%rax)
+        cmpb $SUB_OPERATOR, (%rbx)
         je sub_operation
 
-        cmpb $MUL_OPERATOR, (%rax)
+        cmpb $MUL_OPERATOR, (%rbx)
         je mul_operation
 
-        cmpb $DIV_OPERATOR, (%rax)
+        cmpb $DIV_OPERATOR, (%rbx)
         movq $FALSE, %r13
         je div_operation
 
-        cmpb $MOD_OPERATOR, (%rax)
+        cmpb $MOD_OPERATOR, (%rbx)
         movq $TRUE, %r13
         je div_operation
 
