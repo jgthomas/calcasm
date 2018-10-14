@@ -93,6 +93,11 @@ get_operator:
 
         cmpb $SUB_OPERATOR, (%rbx)
         je sub_operation
+        movq $SubOp, %rdi
+        movq %rbx, %rsi
+        call string_match
+        cmpq $TRUE, %rax
+        je sub_operation
 
         cmpb $MUL_OPERATOR, (%rbx)
         je mul_operation
