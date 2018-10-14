@@ -111,7 +111,8 @@ div_operation:
         je exit_zero_div_error
         movq %r11, %rax
         movq %r12, %rbx
-        div %rbx
+        cqto
+        idivq %rbx
         cmpq $TRUE, %r13
         je remainder
         jmp quotient
