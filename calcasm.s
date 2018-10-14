@@ -85,9 +85,9 @@ get_second_number:
         movq %rax, %r12              # store integer for operation
 
 get_operator:
-        movq ST_ARGV_2(%rbp), %rbx
+        movq ST_ARGV_2(%rbp), %rbx   # load operator
 
-        cmpb $ADD_OPERATOR, (%rbx)
+        cmpb $ADD_OPERATOR, (%rbx)   # check against operator characters
         je add_operation
         cmpb $SUB_OPERATOR, (%rbx)
         je sub_operation
@@ -100,13 +100,13 @@ get_operator:
         cmpb $POW_OPERATOR, (%rbx)
         je pow_operation
 
-        movq %rbx, %rdi
-        call str_len
+        movq %rbx, %rdi              # check length of entered operator,
+        call str_len                 # against length of alt operator strings
         cmpq $ALT_OP_LEN, %rax
         jne exit_operator_error
 
-        movq $AddOp, %rdi
-        movq %rbx, %rsi
+        movq $AddOp, %rdi            # compare entered operator against all,
+        movq %rbx, %rsi              # alt operator string
         call string_match
         cmpq $TRUE, %rax
         je add_operation
