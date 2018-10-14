@@ -109,10 +109,10 @@ mul_operation:
 div_operation:
         cmpq $0, %r12
         je exit_zero_div_error
-        movq %r11, %rax
-        cqto
-        movq %r12, %rbx
-        idivq %rbx
+        movq %r11, %rax           # dividend in %rax
+        cqto                      # sign-extend %rax into %rdx (rdx:rax)
+        movq %r12, %rbx           # divisor in %rbx
+        idivq %rbx                # divide preserving sign
         cmpq $TRUE, %r13
         je remainder
         jmp quotient
