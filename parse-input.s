@@ -244,9 +244,9 @@ exit_loop_digits_to_int:
         ret
 
 
-# FUNCTION: string_match
+# FUNCTION: string_lengths_match
 #
-#    Test if two strings are the same.
+#    Test if two strings are the same length.
 #
 # PARAMETERS
 #
@@ -255,57 +255,29 @@ exit_loop_digits_to_int:
 #
 # LOCAL VARIABLES
 #
-#    %r12 - save first string
-#    %r13 - save second string
-#    %r14 - length of first string
-#    %r15 - length of second string
-#    %bl  - the current char to check - lower byte of %rbx
+#    %r8 - length of first string
+#    %r9 - length of second string
 #
 # RETURN
 #
-#    TRUE (1) if strings are the same, else FALSE (0)
+#    TRUE (1) if strings are the same length, else FALSE (0)
 #
-#.globl string_match
-#.type string_match, @function
-#string_match:
-#        pushq %rbx                # save registers
-#        pushq %r12
-#        pushq %r13
-#
-#        movq %rdi, %r12           # save addresses of strings
-#        movq %rsi, %r13
-#
-#        call str_len              # get length of first string
-#        movq %rax, %r14
-#
-#        movq %rsi, %rdi           # get length of second string
-#        call str_len
-#        movq %rax, %r15
-#
-#        cmpq %r14, %r15           # check strings are same length
-#        jne not_same
-#
-#check_chars:
-#        cmpq $0, %r14             # compare each byte of the two strings
-#        je same
-#        dec %r14
-#        movb (%r12,%r14), %bl
-#        cmpb %bl, (%r13,%r14)
-#        jne not_same
-#        jmp check_chars
-#
-#not_same:
-#        movq $FALSE, %rax
-#        jmp exit_string_match
-#
-#same:
-#        movq $TRUE, %rax
-#
-#exit_string_match:
-#        popq %r13                 # restore registers
-#        popq %r12
-#        popq %rbx
-#        ret
+.globl string_lengths_match
+.type string_lengths_match, @function
+string_lengths_match:
+        call str_len
+        movq %rax, %r8
+        movq %rsi, %rdi
+        call str_len
+        movq %rax, %r9
+        cmpq %r8, %r9
+        je same_len
+        movq $FALSE, %rax
+        jmp exit_string_lengths_match
+same_len:
+        movq $TRUE, %rax
+exit_string_lengths_match:
+        ret
 
 
 # FUNCTION: string_elements_match
