@@ -242,3 +242,63 @@ exit_loop_digits_to_int:
         movq %r14, %rax
         popq %r15                    # restore register
         ret
+
+
+# FUNCTION: string_match
+#
+#    Tests if two strings are the same.
+#
+# PARAMETERS
+#
+#    %rdi - first string
+#    %rsi - second string
+#
+# LOCAL VARIABLES
+#
+#    %r12 - save first string
+#    %r13 - save second string
+#    %r14 - length of first string
+#    %r15 - length of second string
+#    %bl  - the current char to check - lower byte of rbx
+#
+# RETURN
+#
+#    TRUE (1) if strings are the same, else FALSE (0)
+#
+.globl string_match
+.type string_match, @function
+string_match:
+        pushq %rbx
+        pushq %r12
+        pushq %r13
+        movq %rdi, %r12
+        movq %rsi, %r13
+        call str_len
+        movq %rax, %r14
+        movq %rsi, %rdi
+        call str_len
+        movq %rax, %r15
+        cmpq %r14, %r15
+        jne not_same
+
+check_chars:
+        cmpq $0, %r14
+        je same
+        dec %r14
+        movb (%r12,%r14), %bl
+        cmpb %bl, (%r13,%r14)
+        jne not_same
+        jmp check_chars
+
+not_same:
+        movq $FALSE, %rax
+        jmp exit_string_match
+
+same:
+        movq $TRUE, %rax
+
+exit_string_match:
+        popq %r13
+        popq %r12
+        popq %rbx
+        ret
