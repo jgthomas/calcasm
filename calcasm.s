@@ -34,6 +34,8 @@ DivOp:
         .string "div"
 ModOp:
         .string "mod"
+PowOp:
+        .string "pow"
 
 
 .section .bss
@@ -123,6 +125,12 @@ get_operator:
         cmpq $TRUE, %rax
         je get_remainder
 
+        movq $PowOp, %rdi
+        movq %rbx, %rsi
+        call string_match
+        cmpq $TRUE, %rax
+        je pow_operation
+
         jmp exit_operator_error
 
 get_quotient:
@@ -166,6 +174,13 @@ remainder:
         movq %rdx, %rdi
         jmp print_result
 quotient:
+        movq %rax, %rdi
+        jmp print_result
+
+pow_operation:
+        movq %r11, %rdi
+        movq %r12, %rsi
+        call base_to_power
         movq %rax, %rdi
         jmp print_result
 
