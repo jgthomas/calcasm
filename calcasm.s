@@ -26,6 +26,15 @@ ZeroDivError:
 
 AddOp:
         .string "add"
+SubOp:
+        .string "sub"
+MulOp:
+        .string "mul"
+DivOp:
+        .string "div"
+ModOp:
+        .string "mod"
+
 
 .section .bss
 
