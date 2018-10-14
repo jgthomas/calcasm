@@ -70,14 +70,24 @@ get_second_number:
 
 get_operator:
         movq ST_ARGV_2(%rbp), %rax
+
         cmpb $ADD_OPERATOR, (%rax)
         je add_operation
+
         cmpb $MUL_OPERATOR, (%rax)
         je mul_operation
+
         cmpb $SUB_OPERATOR, (%rax)
         je sub_operation
+
         cmpb $DIV_OPERATOR, (%rax)
+        movq $FALSE, %r13
         je div_operation
+
+        cmpb $MOD_OPERATOR, (%rax)
+        movq $TRUE, %r13
+        je div_operation
+
         jmp exit_operator_error
 
 add_operation:
@@ -102,6 +112,13 @@ div_operation:
         movq %r11, %rax
         movq %r12, %rbx
         div %rbx
+        cmpq $TRUE, %r13
+        je remainder
+        jmp quotient
+remainder:
+        movq %rdx, %rdi
+        jmp print_result
+quotient:
         movq %rax, %rdi
         jmp print_result
 
