@@ -74,11 +74,11 @@ get_operator:
         cmpb $ADD_OPERATOR, (%rax)
         je add_operation
 
-        cmpb $MUL_OPERATOR, (%rax)
-        je mul_operation
-
         cmpb $SUB_OPERATOR, (%rax)
         je sub_operation
+
+        cmpb $MUL_OPERATOR, (%rax)
+        je mul_operation
 
         cmpb $DIV_OPERATOR, (%rax)
         movq $FALSE, %r13
