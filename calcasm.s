@@ -110,8 +110,8 @@ div_operation:
         cmpq $0, %r12
         je exit_zero_div_error
         movq %r11, %rax
-        movq %r12, %rbx
         cqto
+        movq %r12, %rbx
         idivq %rbx
         cmpq $TRUE, %r13
         je remainder
