@@ -259,7 +259,7 @@ exit_loop_digits_to_int:
 #    %r13 - save second string
 #    %r14 - length of first string
 #    %r15 - length of second string
-#    %bl  - the current char to check - lower byte of rbx
+#    %bl  - the current char to check - lower byte of %rbx
 #
 # RETURN
 #
