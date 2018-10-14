@@ -100,44 +100,41 @@ get_operator:
         cmpb $POW_OPERATOR, (%rbx)
         je pow_operation
 
-        movq %rbx, %rdi              # check length of entered operator,
-        call str_len                 # against length of alt operator strings
+        movq %rbx, %rdi              # check length of entered operator
+        call str_len
         cmpq $ALT_OP_LEN, %rax
         jne exit_operator_error
 
-        movq $AddOp, %rdi            # compare entered operator against all,
-        movq %rbx, %rsi              # alt operator string
-        call string_match
+        movq $ALT_OP_LEN, %rdx       # load alt operator length
+        movq %rbx, %rsi              # load entered operator
+
+        movq $AddOp, %rdi            # check against each alt operators
+        call string_elements_match
         cmpq $TRUE, %rax
         je add_operation
 
         movq $SubOp, %rdi
-        movq %rbx, %rsi
-        call string_match
+        call string_elements_match
         cmpq $TRUE, %rax
         je sub_operation
 
         movq $MulOp, %rdi
-        movq %rbx, %rsi
-        call string_match
+        call string_elements_match
         cmpq $TRUE, %rax
         je mul_operation
 
         movq $DivOp, %rdi
-        movq %rbx, %rsi
-        call string_match
+        call string_elements_match
         cmpq $TRUE, %rax
         je get_quotient
 
         movq $ModOp, %rdi
-        movq %rbx, %rsi
-        call string_match
+        call string_elements_match
         cmpq $TRUE, %rax
         je get_remainder
 
         movq $PowOp, %rdi
-        movq %rbx, %rsi
-        call string_match
+        call string_elements_match
         cmpq $TRUE, %rax
         je pow_operation
 
