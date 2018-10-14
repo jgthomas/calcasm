@@ -97,6 +97,8 @@ get_operator:
         je get_quotient
         cmpb $MOD_OPERATOR, (%rbx)
         je get_remainder
+        cmpb $POW_OPERATOR, (%rbx)
+        je pow_operation
 
         movq %rbx, %rdi
         call str_len
