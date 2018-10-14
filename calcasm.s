@@ -13,7 +13,7 @@
 .equ ARG_NUM, 4
 
 ArgNumError:
-        .string "usage ./calcasm NUMBER OPERATOR NUMBER"
+        .string "usage ./calcasm <number> <operator> <number>"
 
 NotNumError:
         .string "you have not entered a number"
@@ -195,7 +195,7 @@ exit:
 
 exit_arg_error:
         movq $ArgNumError, %rdi
-        movq $38, %rsi
+        movq $44, %rsi
         call write_error_msg
         call write_newline
         jmp error_exit
