@@ -108,28 +108,28 @@ get_operator:
         je mul_operation
 
         cmpb $DIV_OPERATOR, (%rbx)
-        je set_quotient
+        je get_quotient
         movq $DivOp, %rdi
         movq %rbx, %rsi
         call string_match
         cmpq $TRUE, %rax
-        je set_quotient
+        je get_quotient
 
         cmpb $MOD_OPERATOR, (%rbx)
-        je set_remainder
+        je get_remainder
         movq $ModOp, %rdi
         movq %rbx, %rsi
         call string_match
         cmpq $TRUE, %rax
-        je set_remainder
+        je get_remainder
 
         jmp exit_operator_error
 
-set_quotient:
+get_quotient:
         movq $FALSE, %r13
         jmp div_operation
 
-set_remainder:
+get_remainder:
         movq $TRUE, %r13
         jmp div_operation
 
