@@ -108,7 +108,7 @@ mul_operation:
 
 # for signed integer division see:
 # https://stackoverflow.com/a/10348927/5671759
-# http://www.c-jump.com/CIS77/MLabs/M11arithmetic/M11_0120_idiv_instruction.htm/
+# http://www.c-jump.com/CIS77/MLabs/M11arithmetic/M11_0120_idiv_instruction.htm
 div_operation:
         cmpq $0, %r12
         je exit_zero_div_error
