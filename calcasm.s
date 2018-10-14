@@ -37,6 +37,8 @@ ModOp:
 PowOp:
         .string "pow"
 
+.equ ALT_OP_LEN, 3
+
 
 .section .bss
 
@@ -87,38 +89,44 @@ get_operator:
 
         cmpb $ADD_OPERATOR, (%rbx)
         je add_operation
+        cmpb $SUB_OPERATOR, (%rbx)
+        je sub_operation
+        cmpb $MUL_OPERATOR, (%rbx)
+        je mul_operation
+        cmpb $DIV_OPERATOR, (%rbx)
+        je get_quotient
+        cmpb $MOD_OPERATOR, (%rbx)
+        je get_remainder
+
+        movq %rbx, %rdi
+        call str_len
+        cmpq $ALT_OP_LEN, %rax
+        jne exit_operator_error
+
         movq $AddOp, %rdi
         movq %rbx, %rsi
         call string_match
         cmpq $TRUE, %rax
         je add_operation
 
-        cmpb $SUB_OPERATOR, (%rbx)
-        je sub_operation
         movq $SubOp, %rdi
         movq %rbx, %rsi
         call string_match
         cmpq $TRUE, %rax
         je sub_operation
 
-        cmpb $MUL_OPERATOR, (%rbx)
-        je mul_operation
         movq $MulOp, %rdi
         movq %rbx, %rsi
         call string_match
         cmpq $TRUE, %rax
         je mul_operation
 
-        cmpb $DIV_OPERATOR, (%rbx)
-        je get_quotient
         movq $DivOp, %rdi
         movq %rbx, %rsi
         call string_match
         cmpq $TRUE, %rax
         je get_quotient
 
-        cmpb $MOD_OPERATOR, (%rbx)
-        je get_remainder
         movq $ModOp, %rdi
         movq %rbx, %rsi
         call string_match
