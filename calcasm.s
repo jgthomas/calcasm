@@ -21,6 +21,9 @@ NotNumError:
 OperatorError:
         .string "Invalid operator supplied"
 
+ZeroDivError:
+        .string "Zero division error"
+
 .section .bss
 
 
@@ -73,6 +76,8 @@ get_operator:
         je mul_operation
         cmpb $SUB_OPERATOR, (%rax)
         je sub_operation
+        cmpb $DIV_OPERATOR, (%rax)
+        je div_operation
         jmp exit_operator_error
 
 add_operation:
@@ -88,6 +93,15 @@ sub_operation:
 mul_operation:
         movq %r11, %rax
         mul %r12
+        movq %rax, %rdi
+        jmp print_result
+
+div_operation:
+        cmpq $0, %r12
+        je exit_zero_div_error
+        movq %r11, %rax
+        movq %r12, %rbx
+        div %rbx
         movq %rax, %rdi
         jmp print_result
 
@@ -117,6 +131,13 @@ exit_num_error:
 exit_operator_error:
         movq $OperatorError, %rdi
         movq $25, %rsi
+        call write_error_msg
+        call write_newline
+        jmp error_exit
+
+exit_zero_div_error:
+        movq $ZeroDivError, %rdi
+        movq $20, %rsi
         call write_error_msg
         call write_newline
         jmp error_exit
