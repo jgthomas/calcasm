@@ -101,6 +101,11 @@ get_operator:
 
         cmpb $MUL_OPERATOR, (%rbx)
         je mul_operation
+        movq $MulOp, %rdi
+        movq %rbx, %rsi
+        call string_match
+        cmpq $TRUE, %rax
+        je mul_operation
 
         cmpb $DIV_OPERATOR, (%rbx)
         movq $FALSE, %r13
