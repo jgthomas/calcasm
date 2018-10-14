@@ -246,7 +246,7 @@ exit_loop_digits_to_int:
 
 # FUNCTION: string_match
 #
-#    Tests if two strings are the same.
+#    Test if two strings are the same.
 #
 # PARAMETERS
 #
