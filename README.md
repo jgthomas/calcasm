@@ -45,4 +45,18 @@ Simple calculator written in x86_64 assembly
 
 >\# 8
 ---
+
+## alternative operators
+---
+>\# ./calcasm 10 add 3
+
+>\# ./calcasm 25 sub 8
+
+>\# ./calcasm 10 mul 3
+
+>\# ./calcasm 30 div 10
+
+>\# ./calcasm 31 mod 10
+
+>\# ./calcasm 2 pow 3
 ---
