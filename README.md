@@ -1,6 +1,6 @@
 # calcasm
 
-Simple calculator written in x86_64 assembly
+Simple calculator written in x86-64 assembly
 
 All input, output, and calculation performed in pure assembly, with Linux syscalls. C library be damned.
 
