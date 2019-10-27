@@ -19,7 +19,7 @@ $(PROJNAME): $(OBJECTS)
 clean:
 	$(RM) $(OBJECTS) $(PROJNAME)
 
-test:
+info:
 	@echo "SOURCES = ${SOURCES}"
 	@echo "OBJECTS = ${OBJECTS}"
 	@echo "EXECUTABLE = ${PROJNAME}"
