@@ -13,6 +13,9 @@ all: $(PROJNAME)
 $(PROJNAME): $(OBJECTS)
 	$(LINKER) $(OBJECTS) -o $(PROJNAME)
 
+%.o : %.s
+	$(ASSEMBLER) $< -o $@
+
 clean:
 	$(RM) $(OBJECTS) $(PROJNAME)
 
