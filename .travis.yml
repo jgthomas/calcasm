@@ -1,3 +1,5 @@
 
-language: generic
-script: make
+language:
+        generic
+script:
+        make
