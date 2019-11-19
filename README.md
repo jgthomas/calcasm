@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.com/jgthomas/calcasm.svg?branch=master)](https://travis-ci.com/jgthomas/calcasm)
-
-# calcasm
+# calcasm [![Build Status](https://travis-ci.com/jgthomas/calcasm.svg?branch=master)](https://travis-ci.com/jgthomas/calcasm)
 
 Simple calculator written in x86-64 assembly
 
